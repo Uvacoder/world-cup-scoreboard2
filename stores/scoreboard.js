@@ -1,10 +1,28 @@
 import { defineStore } from 'pinia';
+import { _ } from 'lodash';
 
 export const useScoreBoardStore = defineStore('scoreBoard', {
 	state: () => ({
-		user: null,
 		fixtures: []
 	}),
+
+	getters: {
+		// Order fixtures by score sum desc, and start datetime asc (most goals & start datetime)
+		scoreBoardFixtures: (state) => {
+			return _.orderBy(
+				state.fixtures,
+				[
+					(o) => {
+						return _.sum(o.score);
+					},
+					(o) => {
+						return o.start_datetime;
+					}
+				],
+				['desc', 'asc']
+			);
+		}
+	},
 
 	actions: {
 		setFixtures(payload) {

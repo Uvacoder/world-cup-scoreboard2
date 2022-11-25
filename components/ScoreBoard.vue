@@ -5,8 +5,9 @@ import { storeToRefs } from 'pinia';
 const scoreBoardStore = useScoreBoardStore();
 
 // Access state
-const { fixtures } = storeToRefs(scoreBoardStore);
+const { fixtures, scoreBoardFixtures } = storeToRefs(scoreBoardStore);
 
+// Initialize fixture data
 await scoreBoardStore.initData();
 </script>
 
@@ -14,7 +15,7 @@ await scoreBoardStore.initData();
 	<div>
 		ScoreBoard
 		<div>
-			<pre>{{ fixtures }}</pre>
+			<pre>{{ scoreBoardFixtures }}</pre>
 		</div>
 	</div>
 </template>
