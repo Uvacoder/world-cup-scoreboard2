@@ -1,3 +1,3 @@
 <template>
-	<div class="bg-slate-900">Operations</div>
+	<div>Operations</div>
 </template>
