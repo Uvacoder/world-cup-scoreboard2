@@ -52,9 +52,9 @@ export default {
 				</div>
 			</div>
 			<div class="flex items-center justify-between">
-				<button class="p-2 bg-blue-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="create">Create</button>
-				<button class="p-2 bg-blue-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="update">Update</button>
-				<button class="p-2 bg-blue-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="delete">Delete</button>
+				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="create">Create</button>
+				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="update">Update</button>
+				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="delete">Delete</button>
 			</div>
 		</form>
 
