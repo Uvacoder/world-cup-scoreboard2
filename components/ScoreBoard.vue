@@ -24,7 +24,10 @@ await scoreBoardStore.initData();
 					<div>{{ fixture.participants[1] }}</div>
 					<div>{{ fixture.score[1] }}</div>
 				</div>
-				<div>{{ fixture.start_datetime }}</div>
+				<div class="flex justify-between">
+					<div>{{ fixture.start_datetime }}</div>
+					<pre class="text-gray-400">Fixture ID:{{ fixture.id }}</pre>
+				</div>
 			</li>
 		</ul>
 

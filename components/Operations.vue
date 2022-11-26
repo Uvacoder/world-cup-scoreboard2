@@ -1,4 +1,8 @@
 <script>
+import { useScoreBoardStore } from '~~/stores/scoreboard.js';
+import * as _ from 'lodash';
+import * as jsonpatch from 'fast-json-patch';
+
 export default {
 	data() {
 		return {
@@ -7,18 +11,56 @@ export default {
 				start_datetime: null,
 				participants: [],
 				score: []
-			}
+			},
+			scoreBoardStore: useScoreBoardStore()
 		};
 	},
 	methods: {
-		create() {
-			console.log('create', this.fixture);
+		createFixture() {
+			// Clone a instance of current fixtures list for further manipulation
+			let fixture_list_clone = _.cloneDeep(this.scoreBoardStore.fixtures);
+
+			// Prevent adding duplicate fixture.id
+			_.remove(fixture_list_clone, (o) => o.id == this.fixture.id);
+
+			// Push new fixture to list
+			fixture_list_clone.push(this.fixture);
+
+			// Create json-patch (https://www.rfc-editor.org/rfc/rfc6902)
+			const patch = jsonpatch.compare(this.scoreBoardStore.fixtures, fixture_list_clone);
+
+			// Call patch fixtures on store
+			this.scoreBoardStore.patchFixtures(patch);
 		},
-		update() {
-			console.log('update', this.fixture);
+		updateFixture() {
+			// Clone a instance of current fixtures list for further manipulation
+			let fixture_list_clone = _.cloneDeep(this.scoreBoardStore.fixtures);
+
+			let fixture = _.find(fixture_list_clone, (o) => o.id == this.fixture.id);
+
+			// Update fixture properties one by one for demonstration purposes
+			fixture.start_datetime = this.fixture.start_datetime;
+			fixture.participants = this.fixture.participants;
+			fixture.score = this.fixture.score;
+
+			// Create json-patch (https://www.rfc-editor.org/rfc/rfc6902)
+			const patch = jsonpatch.compare(this.scoreBoardStore.fixtures, fixture_list_clone);
+
+			// Call patch fixtures on store
+			this.scoreBoardStore.patchFixtures(patch);
 		},
-		delete() {
-			console.log('delete', this.fixture);
+		deleteFixture() {
+			// Clone a instance of current fixtures list for further manipulation
+			let fixture_list_clone = _.cloneDeep(this.scoreBoardStore.fixtures);
+
+			// Find & Remove fixture by fixture.id
+			_.remove(fixture_list_clone, (o) => o.id == this.fixture.id);
+
+			// Create json-patch (https://www.rfc-editor.org/rfc/rfc6902)
+			const patch = jsonpatch.compare(this.scoreBoardStore.fixtures, fixture_list_clone);
+
+			// Call patch fixtures on store
+			this.scoreBoardStore.patchFixtures(patch);
 		}
 	}
 };
@@ -52,9 +94,9 @@ export default {
 				</div>
 			</div>
 			<div class="flex items-center justify-between">
-				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="create">Create</button>
-				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="update">Update</button>
-				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="delete">Delete</button>
+				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="createFixture">Create</button>
+				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="updateFixture">Update</button>
+				<button class="p-2 bg-slate-500 text-white font-bold focus:outline-none focus:shadow-outline" type="button" @click="deleteFixture">Delete</button>
 			</div>
 		</form>
 

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { _ } from 'lodash';
+import _ from 'lodash';
+import jsonpatch from 'fast-json-patch';
 
 export const useScoreBoardStore = defineStore('scoreBoard', {
 	state: () => ({
@@ -19,15 +20,21 @@ export const useScoreBoardStore = defineStore('scoreBoard', {
 						return o.start_datetime;
 					}
 				],
-				['desc', 'asc']
+				['desc', 'desc']
 			);
 		}
 	},
 
 	actions: {
+		// Set fixtures snapshot
 		setFixtures(payload) {
 			this.fixtures = payload;
 		},
+		// Patch fixtures (https://www.rfc-editor.org/rfc/rfc6902)
+		patchFixtures(payload) {
+			jsonpatch.applyPatch(this.fixtures, payload);
+		},
+		// Initialize data (maybe connect to a service and get initial snapshot)
 		async initData() {
 			let fitures_payload = [
 				{
@@ -43,19 +50,19 @@ export const useScoreBoardStore = defineStore('scoreBoard', {
 					score: [10, 2]
 				},
 				{
-					id: 2,
+					id: 3,
 					start_datetime: '2022-11-24T03:00:00Z',
 					participants: ['Germany', 'France'],
 					score: [2, 2]
 				},
 				{
-					id: 2,
+					id: 4,
 					start_datetime: '2022-11-24T04:00:00Z',
 					participants: ['Uruguay', 'Italy'],
 					score: [6, 6]
 				},
 				{
-					id: 2,
+					id: 5,
 					start_datetime: '2022-11-24T05:00:00Z',
 					participants: ['Argentina', 'Australia'],
 					score: [3, 1]
