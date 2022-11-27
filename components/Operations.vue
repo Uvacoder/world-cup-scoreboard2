@@ -36,6 +36,7 @@ export default {
 			// Clone a instance of current fixtures list for further manipulation
 			let fixture_list_clone = _.cloneDeep(this.scoreBoardStore.fixtures);
 
+			// Find fixture by the provided fixture id
 			let fixture = _.find(fixture_list_clone, (o) => o.id == this.fixture.id);
 
 			// Update fixture properties one by one for demonstration purposes
