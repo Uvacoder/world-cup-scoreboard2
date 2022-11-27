@@ -1,5 +1,5 @@
 import { setActivePinia, createPinia } from 'pinia';
-import { describe, test, expect, beforeAll, beforeEach, afterEach, afterAll } from 'vitest';
+import { describe, test, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 import { useScoreBoardStore } from './stores/scoreboard.js';
 import * as _ from 'lodash';
 import * as jsonpatch from 'fast-json-patch';
@@ -13,6 +13,10 @@ describe('ScoreBoard Store', () => {
 
 	beforeEach(() => {
 		store = useScoreBoardStore();
+	});
+
+	afterAll(() => {
+		store.$reset();
 	});
 
 	/**
@@ -136,5 +140,5 @@ describe('ScoreBoard Store', () => {
 	 */
 	test('Scoreboard total score getter sorting', () => {
 		expect(store.scoreBoardFixtures[0].participants).toStrictEqual(['TeamE', 'TeamF']);
-	})
+	});
 });
